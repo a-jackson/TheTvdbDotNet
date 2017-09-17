@@ -3,6 +3,16 @@
   <PropertyGroup>
     <Version>0.0.1</Version>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Authors>Andrew Jackson</Authors>
+    <Company>Andrew Jackson</Company>
+    <Description>An API Client for the thetvdb.com</Description>
+    <Copyright>Andrew Jackson</Copyright>
+    <PackageLicenseUrl>https://github.com/a-jackson/TheTvdbDotNet/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/a-jackson/TheTvdbDotNet</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/a-jackson/TheTvdbDotNet</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>tvdb</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
