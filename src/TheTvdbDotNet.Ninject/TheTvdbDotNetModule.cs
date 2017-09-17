@@ -1,0 +1,38 @@
+﻿using Ninject.Modules;
+using TheTvdbDotNet.Authentication;
+using TheTvdbDotNet.Http;
+using TheTvdbDotNet.Repositories;
+
+namespace TheTvdbDotNet.Ninject
+{
+    public class TheTvdbDotNetModule : NinjectModule
+    {
+        private readonly string apiKey;
+
+        public TheTvdbDotNetModule(string apiKey)
+        {
+            this.apiKey = apiKey;
+        }
+
+        public override void Load()
+        {
+            Bind<IAuthenticationToken>().To<AuthenticationToken>()
+                .InSingletonScope();
+            Bind<IAuthenticator>().To<Authenticator>()
+                .InSingletonScope()
+                .WithConstructorArgument("apiKey", apiKey);
+
+            Bind<ITvdbHttpClient>().To<TvdbHttpClient>()
+                .InSingletonScope();
+            Bind<IAuthenticatedTvdbHttpClient>().To<AuthenticatedTvdbHttpClient>()
+                .InSingletonScope();
+
+            Bind<ITvdbSeries>().To<TvdbSeriesRepository>()
+                .InSingletonScope();
+            Bind<ITvdbSearch>().To<TvdbSearchRepository>()
+                .InSingletonScope();
+            Bind<ITvdbUpdate>().To<TvdbUpdateRepository>()
+                .InSingletonScope();
+        }
+    }
+}
