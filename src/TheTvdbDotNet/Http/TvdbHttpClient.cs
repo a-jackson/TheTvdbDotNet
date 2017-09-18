@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -46,6 +47,11 @@ namespace TheTvdbDotNet.Http
             };
             var data = await httpClient.SendAsync(request).ConfigureAwait(false);
             return await HandleResponseAsync<T>(data).ConfigureAwait(false);
+        }
+
+        public Task<Stream> GetStreamAsync(string uri)
+        {
+            return httpClient.GetStreamAsync(uri);
         }
 
         public void SetAuthorizationHeader(string token)

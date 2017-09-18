@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using TheTvdbDotNet.Authentication;
 
 namespace TheTvdbDotNet.Http
@@ -24,6 +25,12 @@ namespace TheTvdbDotNet.Http
         {
             await authenticator.AuthenticateIfNecessaryAsync().ConfigureAwait(false);
             return await httpClient.PostResponseAsync<T>(request.BuildRequest(), postData).ConfigureAwait(false);
+        }
+
+        public async Task<Stream> GetStreamAsync(Request request)
+        {
+            await authenticator.AuthenticateIfNecessaryAsync().ConfigureAwait(false);
+            return await httpClient.GetStreamAsync(request.BuildRequest()).ConfigureAwait(false);
         }
     }
 }

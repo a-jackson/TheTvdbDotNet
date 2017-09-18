@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 using TheTvdbDotNet.Http;
 
 namespace TheTvdbDotNet.Repositories
@@ -10,20 +11,20 @@ namespace TheTvdbDotNet.Repositories
         {
         }
 
-        public async Task<SeriesData> GetSeriesAsync(int seriesId)
+        public Task<SeriesData> GetSeriesAsync(int seriesId)
         {
             var request = new Request("series/{id}", seriesId);
-            return await HttpClient.GetAsync<SeriesData>(request).ConfigureAwait(false);
+            return HttpClient.GetAsync<SeriesData>(request);
         }
 
-        public async Task<SeriesEpisodes> GetEpisodesAsync(int seriesId, string page = null)
+        public Task<SeriesEpisodes> GetEpisodesAsync(int seriesId, string page = null)
         {
             var request = new Request("series/{id}/episodes", seriesId);
             request.AddCriteriaIfNotNull("page", page);
-            return await HttpClient.GetAsync<SeriesEpisodes>(request).ConfigureAwait(false);
+            return HttpClient.GetAsync<SeriesEpisodes>(request);
         }
 
-        public async Task<SeriesEpisodes> QueryEpisodesAsync(
+        public Task<SeriesEpisodes> QueryEpisodesAsync(
             int seriesId,
             string airedSeason = null,
             string airedEpisode = null,
@@ -43,7 +44,13 @@ namespace TheTvdbDotNet.Repositories
             request.AddCriteriaIfNotNull("absoluteNumber", absoluteNumber);
             request.AddCriteriaIfNotNull("firstAired", firstAired);
             request.AddCriteriaIfNotNull("page", page);
-            return await HttpClient.GetAsync<SeriesEpisodes>(request).ConfigureAwait(false);
+            return HttpClient.GetAsync<SeriesEpisodes>(request);
+        }
+
+        public Task<Stream> GetBannerAsnyc(Series series)
+        {
+            var request = new Request(series.Banner);
+            return HttpClient.GetStreamAsync(request);
         }
     }
 }
