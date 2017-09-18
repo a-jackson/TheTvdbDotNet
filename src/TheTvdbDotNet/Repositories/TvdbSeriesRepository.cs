@@ -6,9 +6,12 @@ namespace TheTvdbDotNet.Repositories
 {
     public class TvdbSeriesRepository : TvdbBaseRepository, ITvdbSeries
     {
-        public TvdbSeriesRepository(IAuthenticatedTvdbHttpClient httpClient)
+        private readonly ITvdbBannersHttpClient bannersHttpClient;
+
+        public TvdbSeriesRepository(IAuthenticatedTvdbHttpClient httpClient, ITvdbBannersHttpClient bannersHttpClient)
             : base(httpClient)
         {
+            this.bannersHttpClient = bannersHttpClient;
         }
 
         public Task<SeriesData> GetSeriesAsync(int seriesId)
@@ -50,7 +53,7 @@ namespace TheTvdbDotNet.Repositories
         public Task<Stream> GetBannerAsnyc(Series series)
         {
             var request = new Request(series.Banner);
-            return HttpClient.GetStreamAsync(request);
+            return bannersHttpClient.GetStreamAsync(request);
         }
     }
 }

@@ -26,6 +26,8 @@ namespace TheTvdbDotNet.Ninject
                 .InSingletonScope();
             Bind<IAuthenticatedTvdbHttpClient>().To<AuthenticatedTvdbHttpClient>()
                 .InSingletonScope();
+            Bind<ITvdbBannersHttpClient>().To<TvdbBannersHttpClient>()
+                .InSingletonScope();
 
             Bind<ITvdbSeries>().To<TvdbSeriesRepository>()
                 .InSingletonScope();
